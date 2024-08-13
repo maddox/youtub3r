@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while true; do
+  ruby /usr/app/scan.rb
+  echo "Waiting ${WAIT_IN_SECONDS:=60} seconds..."
+  sleep "${WAIT_IN_SECONDS:=60}"
+done
