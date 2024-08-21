@@ -1,5 +1,6 @@
 require 'httparty'
 require 'json'
+require 'date'
 
 if !ENV['SERVER_HOST']
   puts "Error: SERVER_HOST environment variable not set."
