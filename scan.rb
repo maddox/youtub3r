@@ -46,7 +46,7 @@ VIDEO_GROUPS.each do |group_id|
     end
 
     video_data_path = full_path.gsub(File.extname(full_path), '.info.json')
-    next unless File.exists?(video_data_path)
+    next unless File.exist?(video_data_path)
 
     video_data = JSON.parse(File.open(video_data_path).read)
 
