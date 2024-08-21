@@ -27,7 +27,7 @@ jonmaddox/youtub3r
 ```yaml
 version: "3.1"
 services:
-  nam3r:
+  youtub34:
     image: jonmaddox/youtub3r
     container_name: youtub3r
     environment:
