@@ -12,13 +12,7 @@ if !ENV['VIDEO_PATH']
   exit
 end
 
-if !ENV['VIDEO_GROUPS']
-  puts "Error: VIDEO_GROUPS environment variable not set."
-  exit
-end
 
-
-VIDEO_GROUPS = ENV['VIDEO_GROUPS'].split(',')
 SERVER_URL = "http://#{ENV['SERVER_HOST']}"
 VIDEO_PATH = ENV['VIDEO_PATH']
 
@@ -32,8 +26,11 @@ class Video
   end
 end
 
-VIDEO_GROUPS.each do |group_id|
-  source_files = HTTParty.get("#{SERVER_URL}/dvr/groups/#{group_id}/files")
+groups = HTTParty.get("#{SERVER_URL}/dvr/groups/")
+youtube_groups = groups.select { |g| (g['Labels'] && g['Labels'].include?('youtube')) || (g['Genres'] && g['Genres'].include?('YouTube')) }
+
+youtube_groups.each do |group|
+  source_files = HTTParty.get("#{SERVER_URL}/dvr/groups/#{group['ID']}/files")
 
   source_files.reverse.each do |file|
     full_path = "#{VIDEO_PATH}/#{file['Path']}"
