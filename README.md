@@ -1,16 +1,53 @@
 # youtub3r!
 
-This scans a Channels DVR Server instance and attempts to find NFO JSON files to apply to the videos that came from Pinchflat.
+Youtub3r scans your [Channels DVR Server](https://getchannels.com/dvr-serer/) and attempts to find the corresponding `info.json` files created by Pinchflat and applies the metadata and artwork to the videos in Channels.
 
-It will fetch all groups from your server and only process groups with the label "youtube" or genre "YouTube".
+It will only attempt this for videos in your library that are part of Video Groups with the label "youtube" or genre "YouTube" applied.
+
+## Organization
+
+[Channels](https://getchannels.com) expects videos to be grouped into folders. These are calld [Video Groups](https://getchannels.com/docs/channels-dvr-server/how-to/local-content/#video-groups).
+
+### Channels
+
+You should have all your YouTube videos grouped into their own Video Group directories, with the root directory added as a Video Source in [Channels](https://getchannels.com).
+
+For example, if your videos are organized like this:
+
+    /YouTube Videos/Concerts
+    /YouTube Videos/SNL Clips
+    /YouTube Videos/Music Videos
+
+Then you would add `/YouTube Videos` as a new Video Source in [Channels](https://getchannels.com).
+
+### Pinchflat
+
+Pinchflat defaults to organizing videos for each Source into their own directory. But the default Media Profile puts each video into its own directory. We suggest against this. Instead, format the `output path template` to something like this:
+
+    /{{ source_custom_name }}/{{ upload_yyyy_mm_dd }}-{{ title }}.{{ ext }}
+
+This will result in a directory structure like this:
+
+    /YouTube Videos/Source Name/2024_06_01-Video 1.mp4
+    /YouTube Videos/Source Name/2024_06_01-Video 1.info.json
+    /YouTube Videos/Source Name/2024_06_12-Video 2.mp4
+    /YouTube Videos/Source Name/2024_06_12-Video 2.info.json
+
+This is a required structure for youtub3r to work.
+
+## Usage
 
 ### ENV VARS
 
-| ENV VAR         | Description                     | Required | Default |
-| --------------- | ------------------------------- | -------- | ------- |
-| SERVER_HOST     | host of Channels DVR Server     | Yes      |         |
-| VIDEO_PATH      | path to video files             | Yes      |         |
-| WAIT_IN_SECONDS | Number of seconds between scans | No       | 60      |
+| ENV VAR         | Description                            | Required | Default |
+| --------------- | -------------------------------------- | -------- | ------- |
+| SERVER_HOST     | host of Channels DVR Server            | Yes      |         |
+| VIDEO_PATH      | root path of your YouTube video groups | Yes      |         |
+| WAIT_IN_SECONDS | Number of seconds between scans        | No       | 60      |
+
+### VIDEO_PATH
+
+The path you give Youtub3r must be the path to the root directory of your YouTube video groups. This is the same path you added as a Video Source in Channels.
 
 ### CLI
 
