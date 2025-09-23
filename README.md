@@ -4,6 +4,8 @@ Youtub3r scans your [Channels DVR Server](https://getchannels.com/dvr-serer/) an
 
 It will only attempt this for videos in your library that are part of Video Groups with the label "youtube" or genre "YouTube" applied.
 
+<img src=".github/shot.png" />
+
 ## Organization
 
 [Channels](https://getchannels.com) expects videos to be grouped into folders. These are calld [Video Groups](https://getchannels.com/docs/channels-dvr-server/how-to/local-content/#video-groups).
