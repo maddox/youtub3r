@@ -1,6 +1,6 @@
 # youtub3r!
 
-Youtub3r scans your [Channels DVR Server](https://getchannels.com/dvr-serer/) and attempts to find the corresponding `info.json` files created by Pinchflat and applies the metadata and artwork to the videos in Channels.
+Youtub3r scans your [Channels DVR Server](https://getchannels.com/dvr-serer/) and attempts to find the corresponding `info.json` files created by [Pinchflat](https://github.com/kieraneglin/pinchflat) and applies the metadata and artwork to the videos in Channels.
 
 It will only attempt this for videos in your library that are part of Video Groups with the label "youtube" or genre "YouTube" applied.
 
@@ -22,7 +22,9 @@ Then you would add `/YouTube Videos` as a new Video Source in [Channels](https:/
 
 ### Pinchflat
 
-Pinchflat defaults to organizing videos for each Source into their own directory. But the default Media Profile puts each video into its own directory. We suggest against this. Instead, format the `output path template` to something like this:
+Ensure `Download Metadata` is enabled in the Media Profile you are using with Pinchflat. This will create the `info.json` files that youtub3r needs to read the metadata.
+
+[Pinchflat](https://github.com/kieraneglin/pinchflat) defaults to organizing videos for each Source into their own directory. But the default Media Profile puts each video into its own directory. We suggest against this. Instead, format the `output path template` to something like this:
 
     /{{ source_custom_name }}/{{ upload_yyyy_mm_dd }}-{{ title }}.{{ ext }}
 
