@@ -2,7 +2,7 @@
 
 Youtub3r scans your [Channels DVR Server](https://getchannels.com/dvr-serer/) and attempts to find the corresponding `info.json` files created by [Pinchflat](https://github.com/kieraneglin/pinchflat) and applies the metadata and artwork to the videos in Channels.
 
-It will only attempt this for videos in your library that are part of Video Groups with the label "youtube" or genre "YouTube" applied.
+It will only attempt this for videos in your library that are part of Video Groups with the label `youtube` or genre `YouTube` applied.
 
 <img src=".github/shot.png" />
 
