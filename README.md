@@ -58,7 +58,7 @@ docker run \
 --name youtub3r \
 -e SERVER_HOST="192.168.1.2:8089"
 -e VIDEO_PATH="/path/to/videos"
-youtub3r
+jonmaddox/youtub3r
 ```
 
 ### Docker Compose
@@ -67,7 +67,7 @@ youtub3r
 version: "3.1"
 services:
   youtub34:
-    image: youtub3r
+    image: jonmaddox/youtub3r
     container_name: youtub3r
     environment:
       - SERVER_HOST=192.168.1.2:8089
