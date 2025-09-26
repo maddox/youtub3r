@@ -2,8 +2,6 @@
 
 Youtub3r scans your [Channels DVR Server](https://getchannels.com/dvr-serer/) and attempts to find the corresponding `info.json` files created by [Pinchflat](https://github.com/kieraneglin/pinchflat) and applies the metadata and artwork to the videos in Channels.
 
-It will only attempt this for videos in your library that are part of Video Groups with the label `youtube` or genre `YouTube` applied.
-
 <img src=".github/shot.png" />
 
 ## Organization
@@ -21,6 +19,10 @@ For example, if your videos are organized like this:
     /YouTube Videos/Music Videos
 
 Then you would add `/YouTube Videos` as a new Video Source in [Channels](https://getchannels.com).
+
+### Tag Your Video Groups
+
+In order for youtub3r to know which Video Groups to update, you must tag your Video Groups with either the label `youtube` or the genre `YouTube`.
 
 ### Pinchflat
 
@@ -43,15 +45,18 @@ This is a required structure for youtub3r to work.
 
 ### ENV VARS
 
-| ENV VAR         | Description                            | Required | Default |
-| --------------- | -------------------------------------- | -------- | ------- |
-| SERVER_HOST     | host of Channels DVR Server            | Yes      |         |
-| VIDEO_PATH      | root path of your YouTube video groups | Yes      |         |
-| WAIT_IN_SECONDS | Number of seconds between scans        | No       | 60      |
+| ENV VAR         | Description                     | Required | Default |
+| --------------- | ------------------------------- | -------- | ------- |
+| SERVER_HOST     | host of Channels DVR Server     | Yes      |         |
+| WAIT_IN_SECONDS | Number of seconds between scans | No       | 60      |
 
-### VIDEO_PATH
+### Video Directory
 
-The path you give Youtub3r must be the path to the root directory of your YouTube video groups. This is the same path you added as a Video Source in Channels.
+Youtub3r needs access to your YouTube video files and their corresponding `info.json` files created by Pinchflat.
+
+You must mount your video directory into the container at `/youtube_videos`.
+
+This directory must be the root directory of your YouTube video groups. This is the same path you added as a Video Source in Channels.
 
 ### CLI
 
@@ -59,7 +64,7 @@ The path you give Youtub3r must be the path to the root directory of your YouTub
 docker run \
 --name youtub3r \
 -e SERVER_HOST="192.168.1.2:8089"
--e VIDEO_PATH="/path/to/videos"
+-v /path/to/videos:/youtube_videos
 jonmaddox/youtub3r
 ```
 
@@ -73,5 +78,6 @@ services:
     container_name: youtub3r
     environment:
       - SERVER_HOST=192.168.1.2:8089
-      - VIDEO_PATH=/path/to/videos
+    volumes:
+      - /path/to/videos:/youtube_videos
 ```
