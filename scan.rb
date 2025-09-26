@@ -7,13 +7,8 @@ if !ENV['SERVER_HOST']
   exit
 end
 
-if !ENV['VIDEO_PATH']
-  puts "Error: VIDEO_PATH environment variable not set."
-  exit
-end
-
 SERVER_URL = "http://#{ENV['SERVER_HOST']}"
-VIDEO_PATH = ENV['VIDEO_PATH']
+VIDEO_PATH = "/youtube_videos"
 
 class Video
   attr_accessor :title, :summary, :trailer_url, :release_date, :thumbnail_url
