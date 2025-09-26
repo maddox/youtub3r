@@ -7,6 +7,5 @@ services:
     container_name: youtub3r
     environment:
       - SERVER_HOST=${SERVER_HOST}
-      - VIDEO_PATH=${VIDEO_PATH:-/youtube}
     volumes:
-      - ${DVR_SHARE}:${VIDEO_PATH:-/youtube}
+      - ${YOUTUBE_SHARE}:/youtube_videos
