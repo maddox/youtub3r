@@ -2,8 +2,6 @@
 
 Youtub3r scans your [Channels DVR Server](https://getchannels.com/dvr-serer/) and attempts to find the corresponding `info.json` files created by [Pinchflat](https://github.com/kieraneglin/pinchflat) and applies the metadata and artwork to the videos in Channels.
 
-It will only attempt this for videos in your library that are part of Video Groups with the label `youtube` or genre `YouTube` applied.
-
 <img src=".github/shot.png" />
 
 ## Organization
@@ -21,6 +19,10 @@ For example, if your videos are organized like this:
     /YouTube Videos/Music Videos
 
 Then you would add `/YouTube Videos` as a new Video Source in [Channels](https://getchannels.com).
+
+### Tag Your Video Groups
+
+In order for youtub3r to know which Video Groups to update, you must tag your Video Groups with either the label `youtube` or the genre `YouTube`.
 
 ### Pinchflat
 
