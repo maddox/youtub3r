@@ -12,7 +12,6 @@ if !ENV['VIDEO_PATH']
   exit
 end
 
-
 SERVER_URL = "http://#{ENV['SERVER_HOST']}"
 VIDEO_PATH = ENV['VIDEO_PATH']
 
@@ -26,28 +25,35 @@ class Video
   end
 end
 
-groups = HTTParty.get("#{SERVER_URL}/dvr/groups/")
+def normalize_relative_path(rel)
+  rel.to_s.tr('\\', '/').sub(/\A[A-Za-z]:\//, '') # replace \ with / and drop drive letters
+end
+
+groups = HTTParty.get("#{SERVER_URL}/dvr/groups/").parsed_response
 youtube_groups = groups.select { |g| (g['Labels'] && g['Labels'].include?('youtube')) || (g['Genres'] && g['Genres'].include?('YouTube')) }
 
 youtube_groups.each do |group|
-  source_files = HTTParty.get("#{SERVER_URL}/dvr/groups/#{group['ID']}/files")
+  source_files = HTTParty.get("#{SERVER_URL}/dvr/groups/#{group['ID']}/files").parsed_response
 
   source_files.reverse.each do |file|
-    full_path = "#{VIDEO_PATH}/#{file['Path']}"
+    relative = normalize_relative_path(file['Path'])
+    full_path = File.join(VIDEO_PATH, relative)
 
     puts
-    puts "scrubbing #{full_path}."
+    puts "Scrubbing #{full_path}."
 
     if file['CommercialsVerified']
       puts "Already verified, skipping file."
       next
     end
 
-    video_data_path = full_path.gsub(File.extname(full_path), '.info.json')
-    next unless File.exist?(video_data_path)
+    video_data_path = full_path.sub(/\.[^.\/\\]+$/, '.info.json')
+    unless File.exist?(video_data_path)
+      puts "No metadata file at #{video_data_path}, skipping."
+      next
+    end
 
     video_data = JSON.parse(File.open(video_data_path).read)
-
     video = Video.new(video_data)
     
     package = { Thumbnail: video.thumbnail_url,
@@ -62,4 +68,3 @@ youtube_groups.each do |group|
     puts "#{res.code} - scrubbed #{video.title}"
   end
 end
-
